@@ -1,26 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Button, Grid, Typography } from '@mui/material';
 import './App.css';
 
-function App() {
+import AddItem from './components/AddItem';
+import ListItem from './components/ListItem';
+import { ItemsContainer } from './containers/items.container';
+
+const Wraper = () => {
+  const { items, setItems } = ItemsContainer.useContainer();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Grid container>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: 100,
+          borderBottom: '5px solid #f0f0f0',
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: 20,
+            fontWeight: 'bold',
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          REACT/TS SHOPPING APP
+        </Typography>
+      </Grid>
+      <AddItem />
+      <ListItem items={items} />
+      <Button
+        variant='contained'
+        color='primary'
+        onClick={() => {
+          setItems([]);
+        }}
+        sx={{
+          margin: 2,
+          position: 'fixed',
+          right: 0,
+        }}
+      >
+        Reset
+      </Button>
+    </Grid>
   );
-}
+};
+
+const App = (): JSX.Element => {
+  return (
+    <ItemsContainer.Provider>
+      <Wraper />
+    </ItemsContainer.Provider>
+  );
+};
 
 export default App;
